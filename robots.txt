@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nawat-john.github.io/sitemap.xml
+Sitemap: https://nawatpim.com/sitemap.xml
