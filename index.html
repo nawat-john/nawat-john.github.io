@@ -234,7 +234,7 @@
     background:linear-gradient(var(--pink),var(--crema))}
   .job{position:relative;padding:0 0 38px}
   .job:last-child{padding-bottom:0}
-  .job::before{content:"";position:absolute;left:-29.5px;top:5px;width:13px;height:13px;
+  .job::before{content:"";position:absolute;left:-31px;top:5px;width:14px;height:14px;
     border-radius:50%;background:var(--cream);border:3px solid var(--pink)}
   .job.now::before{background:var(--pink);box-shadow:0 0 0 4px rgba(232,71,138,.18)}
   .job .when{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;
@@ -273,6 +273,7 @@
   .langs{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
   .lang{font-family:'JetBrains Mono',monospace;font-size:.78rem;border:1px solid var(--line);
     border-radius:7px;padding:5px 11px;background:var(--paper)}
+  a.lang:hover{border-color:var(--pink);color:var(--pink)}
   .likes{list-style:none}
   .likes li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);
     font-size:1rem;color:var(--ink-2)}
@@ -480,7 +481,7 @@
         <div class="yr">2026 · Year 4</div>
         <div class="langs">
           <span class="lang">🇹🇭 Thai <span lang="th">(ไทย)</span> — native</span>
-          <span class="lang">🇬🇧 English — conversational</span>
+          <a class="lang" href="/toeic.pdf" target="_blank" rel="noopener">🇬🇧 English — TOEIC 900/990 (B2) ↗</a>
         </div>
       </div>
       <ul class="likes">
