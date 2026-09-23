@@ -250,6 +250,16 @@
   .job ul{margin:10px 0 0;padding-left:18px;color:var(--ink-2);font-size:.96rem}
   .job li{margin-bottom:3px}
   .job li::marker{color:var(--pink)}
+  .job details{margin-top:14px}
+  .job summary{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.78rem;
+    letter-spacing:.04em;color:var(--pink-deep);font-weight:600;list-style:none}
+  .job summary::-webkit-details-marker{display:none}
+  .job summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+  .job details[open] summary::before{transform:rotate(90deg)}
+  .job details[open] summary{margin-bottom:12px}
+  .job .preview-img{width:100%;display:block;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .job .preview-cap{font-size:.85rem;color:var(--coffee);margin-top:8px}
+  .job .preview-cap a{color:var(--pink-deep);border-bottom:1px solid currentColor}
 
   /* ---------- SKILLS ---------- */
   .skills-wrap{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -403,6 +413,13 @@
           <li>First 9 months: built a sales-assistance chatbot using a multi-agent + RAG architecture with Python, LangChain and LangGraph.</li>
           <li>Since then: developing and modernizing web applications migrated from legacy systems, writing unit and integration tests to guarantee behavior is preserved through the rewrite.</li>
         </ul>
+        <details>
+          <summary>View my senior project poster (CCES2026)</summary>
+          <a href="/CCES2026_Poster_MTL.pdf" target="_blank" rel="noopener">
+            <img class="preview-img" src="/poster-preview.png" alt="CCES2026 poster for the MTL Agency Chatbot senior project" loading="lazy">
+          </a>
+          <div class="preview-cap"><a href="/CCES2026_Poster_MTL.pdf" target="_blank" rel="noopener">Open full-size PDF ↗</a></div>
+        </details>
       </div>
 
       <div class="job">
@@ -414,6 +431,16 @@
           <li>Built new features from real client requirements.</li>
           <li>Migrated existing add-ins from .NET Framework to .NET (Core) LTS.</li>
         </ul>
+        <details>
+          <summary>See an example: PEstimate, a CAD add-in</summary>
+          <img class="preview-img" src="/zwcad_menubar.png" alt="PEstimate ribbon toolbar inside ZWCAD, with tools for quantity takeoff, floor boundary, scale, and reports" loading="lazy">
+          <div class="preview-cap">A construction material cost-estimation add-in for ZWCAD — takes off quantities from a drawing (walls, columns, doors, floor area, etc.) and reports estimated material costs. It's an internal company product, so I can't share the source, but here's its ribbon toolbar.</div>
+        </details>
+        <details>
+          <summary>A weekend project from this: AutoCAD + WebView2 add-in</summary>
+          <img class="preview-img" src="/acad-webview2-diagram.svg" alt="Concept diagram: an Open WebView button in a new hehe ribbon tab in AutoCAD, docking a WebView2 browser panel on top of the drawing" loading="lazy">
+          <div class="preview-cap">After working with CAD add-ins here, I built a small side project for fun: a <a href="https://github.com/nawat-john/Acad_WebView2" target="_blank" rel="noopener">WebView2 browser panel embedded inside AutoCAD</a> — a new "hehe" ribbon tab with an "Open WebView" button that docks a live browser window on top of the drawing, so you don't have to alt-tab out to look things up. (Diagram above, since I don't have AutoCAD here to grab a real screenshot.)</div>
+        </details>
       </div>
 
       <div class="job">
