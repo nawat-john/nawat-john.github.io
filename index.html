@@ -72,7 +72,7 @@
   },
   "knowsAbout": [
     "Software Engineering", "Web Development", "Machine Learning",
-    "Data Analytics", ".NET", "C#", "React", "Next.js", "Python",
+    "Data Analytics", ".NET", "C#", "React", "Next.js", "Python", "Go", "Kafka", "PyTorch", "Large Language Models",
     "PostgreSQL", "Docker", "IoT", "Cloud Computing",
     "วิศวกรรมคอมพิวเตอร์", "พัฒนาเว็บไซต์", "ปัญญาประดิษฐ์", "วิทยาศาสตร์ข้อมูล"
   ],
@@ -112,7 +112,9 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{
+    -webkit-tap-highlight-color:transparent;overflow-wrap:break-word;
     background:var(--ink);color:var(--text);
     font-family:'Inter','Noto Sans Thai',system-ui,sans-serif;
     line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
@@ -185,7 +187,7 @@
     padding:8px 14px;border:1px solid #4a372c;border-radius:999px;
     color:var(--cream);background:rgba(26,20,17,.55);transition:all .18s ease;
   }
-  .pill:hover{border-color:var(--pink);color:#fff;background:rgba(232,71,138,.16);transform:translateY(-1px)}
+  @media (hover:hover){.pill:hover{border-color:var(--pink);color:#fff;background:rgba(232,71,138,.16);transform:translateY(-1px)}}
   .pill svg,.foot-links svg{width:15px;height:15px;flex:0 0 auto}
   .hint{margin-top:44px;font-family:'JetBrains Mono',monospace;font-size:.7rem;
     letter-spacing:.16em;text-transform:uppercase;color:var(--coffee-soft)}
@@ -213,7 +215,7 @@
     border:1px solid var(--line);border-radius:16px;padding:20px 22px;
     transition:border-color .2s ease,transform .2s ease;
   }
-  .card:hover{border-color:rgba(232,71,138,.55);transform:translateY(-2px)}
+  @media (hover:hover){.card:hover{border-color:rgba(232,71,138,.55);transform:translateY(-2px)}}
   .jobs{display:grid;gap:14px;margin-top:28px}
   .when{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.04em;
     color:var(--coffee-soft);text-transform:uppercase}
@@ -246,12 +248,34 @@
   .chip{font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:5px 11px;border-radius:7px;
     border:1px solid var(--line);color:var(--cream);background:rgba(247,239,230,.05)}
 
+  /* ---------- PROJECTS ---------- */
+  .projects{display:grid;gap:14px;margin-top:28px}
+  .proj h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.22rem;
+    letter-spacing:-.01em;color:var(--cream);margin:2px 0 6px}
+  .proj p{font-size:.93rem}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:14px 0 2px;list-style:none}
+  .stats li{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.72rem;
+    line-height:1.35;color:var(--coffee-soft)}
+  .stats b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.15rem;color:var(--pink);font-weight:800}
+  .plinks{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:.76rem}
+  .plinks a{color:var(--crema);border-bottom:1px solid var(--line);padding:4px 0}
+  .plinks a:hover{color:var(--pink);border-color:var(--pink)}
+  .minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 22px;margin-top:22px;list-style:none}
+  .minis li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:.88rem}
+  .minis a,.minis strong{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--cream);font-weight:700}
+  .minis a::after{content:" ↗";color:var(--pink)}
+  .minis a:hover{color:var(--pink)}
+  .minis span{display:block;color:var(--coffee-soft)}
+  .allrepos{margin-top:18px}
+
   /* ---------- EDUCATION + INTERESTS ---------- */
   .edu{margin-top:28px}
   .deg{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.3rem;
     letter-spacing:-.01em;color:var(--cream);line-height:1.25}
   .uni{color:var(--crema);font-weight:500;margin-top:2px}
   .yr{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--coffee-soft);margin-top:6px}
+  .courses{margin-top:12px;font-size:.84rem;color:var(--coffee-soft)}
+  .yr a{border-bottom:1px solid currentColor}
   .langs{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
   .likes{list-style:none;margin-top:22px}
   .likes li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}
@@ -267,6 +291,7 @@
   .foot-links a,.foot-links button{font:inherit;background:none;border:0;cursor:pointer;
     display:inline-flex;align-items:center;gap:9px;color:var(--crema);transition:color .15s}
   .foot-links a:hover,.foot-links button:hover{color:var(--pink)}
+  .open{margin-top:16px;color:var(--crema)}
   .colophon{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:.7rem;
     color:#8d7565;letter-spacing:.03em}
 
@@ -277,11 +302,13 @@
   /* narrow screens: the cup sits centred behind the text, so every column gets a glass backing */
   @media (max-width:860px){
     .nav ul{display:none}
+    h1{font-size:clamp(2.2rem,11.5vw,4.4rem)} /* "Pimolsathien" must fit one line down to 320px */
     section,footer{padding-top:90px}
     .hero{align-items:flex-end;padding-top:44svh}
     .col{background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
       border:1px solid var(--line);border-radius:18px;padding:22px}
-    .card{background:rgba(26,20,17,.5);-webkit-backdrop-filter:none;backdrop-filter:none}
+    .col{padding:20px 18px}
+    .card{background:rgba(26,20,17,.5);-webkit-backdrop-filter:none;backdrop-filter:none;padding:16px}
     .hint{display:none}
   }
   @media (prefers-reduced-motion:reduce){
@@ -300,6 +327,7 @@
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Toolkit</a></li>
     <li><a href="#more">Education</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -349,7 +377,7 @@
 </section>
 
 <!-- ===== ABOUT ===== -->
-<section class="r" id="about" data-shot="1.9 0.95 5 -0.5">
+<section class="r" id="about" data-shot="1.7 0.95 5 -0.5">
   <div class="col reveal">
     <div class="about-top">
       <div class="portrait">
@@ -380,7 +408,7 @@
 </section>
 
 <!-- ===== EXPERIENCE ===== -->
-<section id="experience" data-shot="3.3 0.35 7 0.62">
+<section id="experience" data-shot="2.8 0.35 7 0.62">
   <div class="col wide">
     <div class="reveal">
       <span class="eyebrow">02 — Experience</span>
@@ -394,6 +422,7 @@
         <div class="org"><a href="https://www.muangthai.co.th/" target="_blank" rel="noopener">Muang Thai Life Assurance</a></div>
         <ul>
           <li>First 9 months: built a sales-assistance chatbot using a multi-agent + RAG architecture with Python, LangChain and LangGraph.</li>
+          <li>Routed questions with a TF-IDF + logistic-regression intent classifier (scikit-learn), and evaluated retrieval with hit-rate and MRR against reference answers from a larger model, combined with human scoring.</li>
           <li>Since then: developing and modernizing web applications migrated from legacy systems, writing unit and integration tests to guarantee behavior is preserved through the rewrite.</li>
         </ul>
         <details>
@@ -452,11 +481,63 @@
   </div>
 </section>
 
-<!-- ===== SKILLS ===== -->
-<section class="r" id="skills" data-shot="4.5 1.3 5.4 -0.52">
+<!-- ===== PROJECTS ===== -->
+<section class="r" id="projects" data-shot="3.9 0.7 7.4 -0.6">
   <div class="col wide">
     <div class="reveal">
-      <span class="eyebrow">03 — Toolkit</span>
+      <span class="eyebrow">03 — Projects</span>
+      <h2>Built on my own time, measured not assumed</h2>
+    </div>
+
+    <div class="projects">
+      <article class="proj card reveal">
+        <div class="when">Machine learning · Python · QLoRA · GGUF</div>
+        <h3>pholama — compressing a Thai LLM</h3>
+        <p>Pruned and quantized Typhoon2 3B (Llama 3.2 base) into a domain Q&amp;A model for Chulalongkorn's registrar office: vocabulary trimmed 128k → 45k, layers pruned 28 → 24, quality recovered with QLoRA (perplexity 14 → 7.6), then quantized to GGUF Q4_K_M and deployed behind retrieval. Every stage ran on a 4 GB laptop GPU.</p>
+        <ul class="stats">
+          <li><b>−76%</b>deploy size, 6.4 → 1.5 GB</li>
+          <li><b>23.5 tok/s</b>on CPU vs 10.6 on GPU</li>
+          <li><b>35 → 47.5%</b>in-domain quality</li>
+        </ul>
+        <div class="plinks"><a href="https://github.com/nawat-john/pholama" target="_blank" rel="noopener">GitHub ↗</a></div>
+      </article>
+
+      <article class="proj card reveal">
+        <div class="when">Backend · Go · Kafka · PostgreSQL · Redis</div>
+        <h3>satang — event-driven double-entry ledger</h3>
+        <p>Money-transfer backend: idempotent transfers (Redis plus a database unique constraint), ordered row locking to prevent deadlocks, a transactional outbox to Kafka, and an async fraud-detection consumer with retries and a dead-letter queue. REST (Gin) and gRPC share one service layer; tested with testify and testcontainers, traced with OpenTelemetry and Jaeger, metrics in Prometheus and Grafana, shipped with Docker Compose, Kubernetes manifests and GitHub Actions CI.</p>
+        <div class="plinks"><a href="https://github.com/nawat-john/satang" target="_blank" rel="noopener">GitHub ↗</a><a href="https://nawatpim.com/satang/demo/" target="_blank" rel="noopener">Live demo ↗</a></div>
+      </article>
+
+      <article class="proj card reveal">
+        <div class="when">Realtime · Go · Redpanda (Kafka) · WebSocket · Svelte</div>
+        <h3>OddsPulse — realtime prediction-market prices</h3>
+        <p>Polymarket prices stream through a Redpanda pipeline into a Go WebSocket gateway that fans them out live to a browser Market Wall, Surge Feed and Top Movers panel, with a replay mode so the screen always moves.</p>
+        <ul class="stats">
+          <li><b>20,000</b>concurrent WebSocket clients per gateway</li>
+          <li><b>2×</b>over the 10k target</li>
+        </ul>
+        <div class="plinks"><a href="https://github.com/nawat-john/polymorph" target="_blank" rel="noopener">GitHub ↗</a><a href="https://nawatpim.com/polymorph/" target="_blank" rel="noopener">Live ↗</a></div>
+      </article>
+    </div>
+
+    <ul class="minis reveal">
+      <li><a href="https://github.com/nawat-john/MooGPT" target="_blank" rel="noopener">MooGPT</a><span>GPT-style transformer written from scratch in C++ — tensors, backprop, AdamW, BPE tokenizer — every gradient checked against a PyTorch oracle.</span></li>
+      <li><a href="https://github.com/nawat-john/typhoon_finetune" target="_blank" rel="noopener">typhoon_finetune</a><span>QLoRA fine-tune of Typhoon2-3B on a Thai speech-style dataset built from YouTube transcripts, trained inside 4 GB of VRAM.</span></li>
+      <li><a href="https://nawatpim.com/air-hockey-master/" target="_blank" rel="noopener">air-hockey RL</a><span>Hybrid physics + reinforcement-learning bot (SAC, self-play) that decides at 10 Hz. Playable in the browser.</span></li>
+      <li><strong>Aurum</strong><span>Order management for a gold retailer — Next.js + NestJS, PostgreSQL, Redis, MinIO, behind Caddy and a Cloudflare Tunnel. Private client work; walkthrough on request.</span></li>
+      <li><a href="https://github.com/nawat-john/Opengl_Crack" target="_blank" rel="noopener">OpenGL Crack</a><span>Procedural crack patterns on surfaces using Voronoi and parallax techniques, built with a collaborator.</span></li>
+      <li><a href="https://nawatpim.com/Geollage/" target="_blank" rel="noopener">Tecto Studio</a><span>Interactive 3D tectonic-plates globe in Next.js: replay plate reconstructions from up to 1.8 billion years ago, or drag and slice plates in a sandbox. Runs fully in the browser.</span></li>
+    </ul>
+    <a class="pill allrepos" href="https://github.com/nawat-john?tab=repositories" target="_blank" rel="noopener">All repositories on GitHub ↗</a>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section id="skills" data-shot="4.9 1.3 5.4 0.52">
+  <div class="col wide">
+    <div class="reveal">
+      <span class="eyebrow">04 — Toolkit</span>
       <h2>Tech I reach for</h2>
     </div>
     <div class="skillgrid">
@@ -466,15 +547,19 @@
       </div>
       <div class="card reveal">
         <h3 class="cat">// backend</h3>
-        <ul class="chips"><li class="chip">.NET / C#</li><li class="chip">Java Spring Boot</li><li class="chip">Go</li><li class="chip">Node.js</li><li class="chip">C++</li></ul>
+        <ul class="chips"><li class="chip">.NET / C#</li><li class="chip">Java Spring Boot</li><li class="chip">Go</li><li class="chip">Node.js</li><li class="chip">NestJS</li><li class="chip">C++</li></ul>
       </div>
       <div class="card reveal">
         <h3 class="cat">// ai &amp; ml</h3>
-        <ul class="chips"><li class="chip">TensorFlow</li><li class="chip">scikit-learn</li><li class="chip">Python</li><li class="chip">LLMs</li></ul>
+        <ul class="chips"><li class="chip">TensorFlow</li><li class="chip">scikit-learn</li><li class="chip">Python</li><li class="chip">LLMs</li><li class="chip">PyTorch</li><li class="chip">Hugging Face</li><li class="chip">PEFT / QLoRA</li><li class="chip">LangChain / LangGraph</li><li class="chip">PyThaiNLP</li><li class="chip">Gymnasium (RL)</li></ul>
       </div>
       <div class="card reveal">
         <h3 class="cat">// data &amp; devops</h3>
-        <ul class="chips"><li class="chip">PostgreSQL</li><li class="chip">SQL</li><li class="chip">Docker</li></ul>
+        <ul class="chips"><li class="chip">PostgreSQL</li><li class="chip">SQL</li><li class="chip">Docker</li><li class="chip">Redis</li><li class="chip">MinIO</li><li class="chip">pandas</li><li class="chip">NumPy</li><li class="chip">Caddy</li><li class="chip">Cloudflare</li></ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="cat">// distributed systems</h3>
+        <ul class="chips"><li class="chip">Kafka</li><li class="chip">gRPC</li><li class="chip">Kubernetes</li><li class="chip">Prometheus / Grafana</li><li class="chip">OpenTelemetry</li></ul>
       </div>
       <div class="card reveal">
         <h3 class="cat">// also into</h3>
@@ -485,15 +570,16 @@
 </section>
 
 <!-- ===== EDUCATION + INTERESTS ===== -->
-<section id="more" data-shot="5.7 0.14 5.8 0.5">
+<section class="r" id="more" data-shot="5.9 0.14 5.8 -0.5">
   <div class="col reveal">
-    <span class="eyebrow">04 — Off the clock</span>
+    <span class="eyebrow">05 — Off the clock</span>
     <h2>Education &amp; the rest of me</h2>
     <div class="edu">
       <div class="deg">B.Eng. Computer Engineering &amp; Digital Technology</div>
       <div class="uni">Chulalongkorn University</div>
       <div class="uni" lang="th">วิศวกรรมคอมพิวเตอร์และเทคโนโลยีดิจิทัล · จุฬาลงกรณ์มหาวิทยาลัย</div>
-      <div class="yr">2026 · Year 4</div>
+      <div class="yr">2023 — 2026 · Year 4 · GPAX 3.71 / 4.00 · <a href="transcript.pdf" target="_blank" rel="noopener">transcript ↗</a></div>
+      <p class="courses">Coursework: Software Engineering · Database Systems · Data Structures &amp; Algorithms · Computer Networks · Operating Systems &amp; Systems Programming · Neural Networks (A) · AI &amp; Machine Learning · Introduction to Data Science Engineering (A) · Statistics for Computer Engineering · IoT Systems · Capstone Project I–II (A)</p>
       <div class="langs">
         <span class="pill" style="cursor:default">🇹🇭 Thai <span lang="th">(ไทย)</span> — native</span>
         <a class="pill" href="toeic.pdf" target="_blank" rel="noopener">🇬🇧 English — TOEIC 900/990 (B2) ↗</a>
@@ -515,12 +601,16 @@
   <div class="col reveal">
     <span class="eyebrow">Let's build something</span>
     <p class="cta">Say hi —<br>I usually reply<br>over <span class="dae">coffee</span>.</p>
+    <p class="open">Open to backend, full-stack and machine learning engineering roles.</p>
     <div class="foot-links">
       <a href="mailto:nawatpim@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>nawatpim@gmail.com</a>
       <a href="tel:+66888645743"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>088-864-5743</a>
       <a href="https://github.com/nawat-john" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>github.com/nawat-john</a>
       <a href="https://www.linkedin.com/in/nawat-pimolsathien-486815318" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>linkedin.com/in/nawat-pimolsathien</a>
       <button type="button" data-copy="mooooom" aria-label="Discord username mooooom — click to copy"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19.8 19.8 0 0 0 15.1 3l-.3.5a18 18 0 0 1 4.3 1.4 16.6 16.6 0 0 0-14.3 0A18 18 0 0 1 9.2 3.5L8.9 3A19.8 19.8 0 0 0 4 4.4 20.4 20.4 0 0 0 .5 18.3a19.9 19.9 0 0 0 6 3l.8-1.2a13 13 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a13 13 0 0 1-2 1l.8 1.2a19.9 19.9 0 0 0 6-3A20.4 20.4 0 0 0 20 4.4ZM8.3 14.7c-1 0-1.7-.9-1.7-2s.8-2 1.7-2c1 0 1.7.9 1.7 2s-.8 2-1.7 2Zm7.4 0c-1 0-1.7-.9-1.7-2s.8-2 1.7-2c1 0 1.7.9 1.7 2s-.8 2-1.7 2Z"/></svg><span>discord: mooooom</span></button>
+      <a href="Nawat_Pimolsathien_CV_V2.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>CV — backend &amp; full-stack ↗</a>
+      <a href="Nawat_Pimolsathien_CV_V3_ML.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>CV — machine learning ↗</a>
+      <a href="Nawat_Pimolsathien_Portfolio_V1.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>Portfolio (PDF) ↗</a>
     </div>
     <p class="colophon">© 2026 Nawat Pimolsathien <span lang="th">· นวัต พิมลเสถียร · วิศวกรคอมพิวเตอร์ · นนทบุรี ประเทศไทย</span> · one cup, one canvas, rendered live with three.js.</p>
   </div>

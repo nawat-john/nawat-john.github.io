@@ -9,7 +9,8 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const INK = 0x1a1411, FOV = 35;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+// phones: 1.5x is visually the same behind glass cards and saves a lot of fill-rate / battery
+renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia("(pointer: coarse)").matches ? 1.5 : 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
